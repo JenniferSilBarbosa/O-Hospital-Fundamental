@@ -1,0 +1,53 @@
+
+medico {
+	id_medico integer pk increments
+	CRM integer pk
+	nome varchar(200)
+	telefone integer
+	email varchar(200)
+	especialidade integer > especialidade.id_especialidade
+}
+
+especialidade {
+	id_especialidade integer pk increments unique > medico.id
+	nome_especialidade varchar(200)
+}
+
+consulta {
+	id_consulta integer pk increments unique
+	CRM integer > medico.CRM
+	CPF_paciente integer > paciente.CPF
+	data_hora datetime
+	especialidade integer > especialidade.nome_especialidade
+	convenio integer > convenio.nome_convenio
+}
+
+paciente {
+	id_paciente timestamp pk increments unique
+	nome varchar(200)
+	CPF varchar(11)
+	RG varchar(9)
+	dtNasc date
+	email varchar(200)
+	telefone integer
+	endereco varchar(200)
+	convenio integer > convenio.id_convenio
+	carteirinha integer
+}
+
+convenio {
+	id_convenio integer pk increments unique
+	nome_convenio varchar(200)
+	CNPJ_empresa integer
+	tempo_de_carencia integer
+}
+
+receita {
+	id_receita integer pk increments unique
+	medicamento varchar(2000)
+	quantidade varchar(200)
+	instrucoes varchar(2000)
+	medico integer > medico.CRM
+	paciente integer > paciente.CPF
+}
+
